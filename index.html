@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <!-- Icons FontAwesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Script -->
+    <script src="script.js" defer></script>
+    <title>Pomodoro</title>
+  </head>
+  <body>
+    <div class="container">
+      <!-- header -->
+      <header>
+        <h1 class="text-center mt-3 display-3">Pomodoro</h1>
+      </header>
+      <!-- Pomodoro Container -->
+      <main>
+        <!-- Display Timer -->
+        <section
+          class="m-auto p-4 bg-danger text-center rounded-5"
+          id="display"
+          style="width: 100%; max-width: 450px"
+        >
+          <h4 class="bg-dark py-1">Session</h4>
+          <p id="time-left" class="display-2 fw-bold">25:00</p>
+          <div class="d-flex justify-content-center gap-5 p-2">
+            <i id="start-btn" class="fa-solid fa-play fa-2xl" role="button"></i>
+            <!-- <i id="pause-btn" class="fa-solid fa-pause fa-2xl" role="button"></i> -->
+            <i
+              id="reset-btn"
+              class="fa-solid fa-arrows-rotate fa-2xl"
+              role="button"
+            ></i>
+          </div>
+        </section>
+        <!-- Break  And Time Section Controls container -->
+        <!-- Break Container -->
+        <section
+          class="container text-center d-flex justify-content-center gap-5 align-items-center mt-3"
+        >
+          <div class="bg-danger p-3 rounded-3 text-bg-secondary">
+            <h4>Break</h4>
+            <button
+              id="increase-break"
+              class="bg-transparent border-0 text-primary display-6"
+            >
+              &plus;
+            </button>
+            <span id="break-time" class="h1">5</span>
+            <button
+              id="decrease-break"
+              class="bg-transparent border-0 text-primary display-6"
+            >
+              &minus;
+            </button>
+          </div>
+          <!-- Set Time Section -->
+          <div class="bg-danger p-3 rounded-3 text-bg-secondary">
+            <h4>Section</h4>
+            <button
+              id="increase-break"
+              class="bg-transparent border-0 text-primary display-6"
+            >
+              &plus;
+            </button>
+            <span id="break-time" class="h1">25</span>
+            <button
+              id="decrease-break"
+              class="bg-transparent border-0 text-primary display-6"
+            >
+              &minus;
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
