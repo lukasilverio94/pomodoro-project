@@ -31,11 +31,15 @@
           id="display"
           style="width: 100%; max-width: 450px"
         >
-          <h4 class="bg-dark py-1">Session</h4>
+          <h3 id="main-session-text" class="bg-dark py-2 text-warning">Session</h3>
           <p id="time-left" class="display-2 fw-bold">25:00</p>
           <div class="d-flex justify-content-center gap-5 p-2">
             <i id="start-btn" class="fa-solid fa-play fa-2xl" role="button"></i>
-            <!-- <i id="pause-btn" class="fa-solid fa-pause fa-2xl" role="button"></i> -->
+            <i
+              id="pause-btn"
+              class="fa-solid fa-pause fa-2xl d-none"
+              role="button"
+            ></i>
             <i
               id="reset-btn"
               class="fa-solid fa-arrows-rotate fa-2xl"
