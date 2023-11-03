@@ -35,7 +35,7 @@ function stop() {
 //Start Countdown Event
 startBtn.addEventListener("click", () => {
   if (!timer) {
-    timer = setInterval(updatedCountDown, 100);
+    timer = setInterval(updatedCountDown, 1000);
   }
   startBtn.classList.toggle("d-none");
   pauseBtn.classList.toggle("d-none");
