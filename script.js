@@ -1,5 +1,5 @@
 //Display Elements Main Container
-const mainSectionText = document.getElementById('main-session-text');
+const mainSectionText = document.getElementById("main-session-text");
 const countDown = document.getElementById("time-left");
 const startBtn = document.getElementById("start-btn");
 const pauseBtn = document.getElementById("pause-btn");
@@ -8,8 +8,12 @@ const resetBtn = document.getElementById("reset-btn");
 const increaseBreak = document.getElementById("increase-break");
 const breakTime = document.getElementById("break-time");
 const decreaseBreak = document.getElementById("decrease-break");
+//Edit Pomodoro Section Time
+const increaseSectionBtn = document.getElementById("increase-section");
+const decreaseSectionBtn = document.getElementById("decrease-section");
 
-const startingMinutes = 25;
+let startingMinutes = 1;
+let startBreak = 5;
 let time = startingMinutes * 60;
 let timer; // to store the interval timer
 
@@ -18,45 +22,45 @@ function updatedCountDown() {
   const minutes = Math.floor(time / 60);
   let seconds = time % 60;
   countDown.innerText = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-  time--;
 
   if (time < 0) {
     stop();
-    countDown.innerText = breakTime.innerText + ":00";
-    mainSectionText.innerText = "Take a break 😄";
-  
+    countDown.innerText = `${breakTime.innerText}:00`;
+    mainSectionText.innerText = "Take a  break 😄";
+    startBreak(); //start the break time
+    updatedCountDown()
+  } else {
+    time--;
   }
 }
 
-//function stop
+//Start Countdown Event
+function startTimer() {
+  timer = setInterval(() => {
+    time--;
+    updatedCountDown();
+  }, 100);
+  toggleBtn();
+}
+
+//Clear Interval
 function stop() {
   clearInterval(timer);
 }
-//Start Countdown Event
-startBtn.addEventListener("click", () => {
-  if (!timer) {
-    timer = setInterval(updatedCountDown, 1000);
-  }
+//Pause Timer
+function pauseTimer() {
+  stop();
+  toggleBtn();
+}
+
+//Toggle Btns Classes
+function toggleBtn() {
   startBtn.classList.toggle("d-none");
   pauseBtn.classList.toggle("d-none");
   pauseBtn.classList.toggle("d-block");
-});
-
-//pause btn
-pauseBtn.addEventListener("click", () => {
-  stop();
-  timer = undefined;
-  startBtn.classList.toggle("d-none");
-  pauseBtn.classList.toggle("d-none");
-  pauseBtn.classList.toggle("d-block");
-});
-
-//reset state
-resetBtn.addEventListener("click", () => {
-  stop();
-  timer = undefined;
-  time = startingMinutes * 60;
-  updatedCountDown();
-  pauseBtn.classList.add('d-none');
-  startBtn.classList.add('d-inline')
-});
+}
+//Handle Events
+startBtn.addEventListener("click", startTimer);
+pauseBtn.addEventListener("click", pauseTimer);
+// resetBtn.addEventListener("click", resetTimer);
+///////////////////////////////////////////////////
