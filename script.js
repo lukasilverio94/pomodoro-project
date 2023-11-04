@@ -27,8 +27,9 @@ function updatedCountDown() {
     stop();
     countDown.innerText = `${breakTime.innerText}:00`;
     mainSectionText.innerText = "Take a  break 😄";
-    startBreak(); //start the break time
-    updatedCountDown()
+    toggleBtn()
+    startBreak()
+    
   } else {
     time--;
   }
@@ -43,6 +44,10 @@ function startTimer() {
   toggleBtn();
 }
 
+//Start Break
+// function startBreak() {
+
+// }
 //Clear Interval
 function stop() {
   clearInterval(timer);
