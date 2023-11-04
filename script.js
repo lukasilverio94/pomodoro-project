@@ -13,11 +13,12 @@ const increaseSectionBtn = document.getElementById("increase-section");
 const decreaseSectionBtn = document.getElementById("decrease-section");
 
 let startingMinutes = 1;
-let startBreak = 5;
+let startBreak = 2;
 let time = startingMinutes * 60;
 let timer; // to store the interval timer
 let inBreak = false;
 
+mainSectionText.innerText = "Session";
 //UpdatedCountDown()
 function updatedCountDown() {
   const minutes = Math.floor(time / 60);
@@ -27,9 +28,7 @@ function updatedCountDown() {
   if (time <= 0) {
     stop();
     countDown.innerText = `${breakTime.innerText}:00`;
-    mainSectionText.innerText = "Take a  break 😄";
     toggleBtn();
-  } else if (time === startBreak) {
     startBreakFun();
   } else {
     time--;
@@ -47,23 +46,22 @@ function startTimer() {
 
 //Start Break
 function startBreakFun() {
-  mainSectionText.innerText = "Break Time - Relax";
-  inBreak = true;
-  clearInterval(timer); // Clear any existing timers
-  time = startBreak * 60; // Reset the countdown timer to the break time
+  if (inBreak) {
+    mainSectionText.innerText = "Let's work more...";
+    inBreak = false;
+    time = startingMinutes * 60; //reset the countdown to session pomodoro again
+  } else {
+    mainSectionText.innerText = "Break Time - Relax";
+    inBreak = true;
+    time = startBreak * 60; // Reset the countdown timer to the break time
+  }
+  //Check if a cycle is completed
+  if (!inBreak && time === startingMinutes * 60) {
+    const counter = document.getElementById("counter");
+    counter.innerText = parseInt(counter.innerText) + 1;
+  }
   updatedCountDown(); // Update the countdown display immediately
   startTimer();
-
-  if (inBreak && time <= 0) {
-    inBreak = false;
-    mainSectionText.innerText = "Session";
-    startTimer(); // Start the Pomodoro session immediately
-  }
-}
-
-//Delay 5 seconds the Break Countdown
-function startBreakWithDelay() {
-  setTimeout(startBreakFun, 5000); //5 seconds
 }
 
 //Clear Interval
@@ -76,16 +74,16 @@ function pauseTimer() {
   toggleBtn();
 }
 
-//Toggle Btns Classes
+//Toggle buttons classes
 function toggleBtn() {
   startBtn.classList.toggle("d-none");
   pauseBtn.classList.toggle("d-none");
   pauseBtn.classList.toggle("d-block");
 }
-//Handle Events
 
+//Handle Events
 startBtn.addEventListener("click", () => {
-  if (timer) {
+  if (timer && time === startingMinutes) {
     startBreakFun();
   } else {
     startTimer();
@@ -93,4 +91,4 @@ startBtn.addEventListener("click", () => {
 });
 pauseBtn.addEventListener("click", pauseTimer);
 // resetBtn.addEventListener("click", resetTimer);
-///////////////////////////////////////////////////
+
