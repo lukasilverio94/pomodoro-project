@@ -16,6 +16,7 @@ let startingMinutes = 1;
 let startBreak = 5;
 let time = startingMinutes * 60;
 let timer; // to store the interval timer
+let inBreak = false;
 
 //UpdatedCountDown()
 function updatedCountDown() {
@@ -23,13 +24,13 @@ function updatedCountDown() {
   let seconds = time % 60;
   countDown.innerText = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
-  if (time < 0) {
+  if (time <= 0) {
     stop();
     countDown.innerText = `${breakTime.innerText}:00`;
     mainSectionText.innerText = "Take a  break 😄";
-    toggleBtn()
-    startBreak()
-    
+    toggleBtn();
+  } else if (time === startBreak) {
+    startBreakFun();
   } else {
     time--;
   }
@@ -45,9 +46,26 @@ function startTimer() {
 }
 
 //Start Break
-// function startBreak() {
+function startBreakFun() {
+  mainSectionText.innerText = "Break Time - Relax";
+  inBreak = true;
+  clearInterval(timer); // Clear any existing timers
+  time = startBreak * 60; // Reset the countdown timer to the break time
+  updatedCountDown(); // Update the countdown display immediately
+  startTimer();
 
-// }
+  if (inBreak && time <= 0) {
+    inBreak = false;
+    mainSectionText.innerText = "Session";
+    startTimer(); // Start the Pomodoro session immediately
+  }
+}
+
+//Delay 5 seconds the Break Countdown
+function startBreakWithDelay() {
+  setTimeout(startBreakFun, 5000); //5 seconds
+}
+
 //Clear Interval
 function stop() {
   clearInterval(timer);
@@ -65,7 +83,14 @@ function toggleBtn() {
   pauseBtn.classList.toggle("d-block");
 }
 //Handle Events
-startBtn.addEventListener("click", startTimer);
+
+startBtn.addEventListener("click", () => {
+  if (timer) {
+    startBreakFun();
+  } else {
+    startTimer();
+  }
+});
 pauseBtn.addEventListener("click", pauseTimer);
 // resetBtn.addEventListener("click", resetTimer);
 ///////////////////////////////////////////////////
