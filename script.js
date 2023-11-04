@@ -12,7 +12,7 @@ const decreaseBreak = document.getElementById("decrease-break");
 const increaseSectionBtn = document.getElementById("increase-section");
 const decreaseSectionBtn = document.getElementById("decrease-section");
 
-let startingMinutes = 1;
+let startingMinutes = 25;
 let startBreak = 2;
 let time = startingMinutes * 60;
 let timer; // to store the interval timer
@@ -47,7 +47,7 @@ function startTimer() {
 //Start Break
 function startBreakFun() {
   if (inBreak) {
-    mainSectionText.innerText = "Let's work more...";
+    mainSectionText.innerText = "Back to work";
     inBreak = false;
     time = startingMinutes * 60; //reset the countdown to session pomodoro again
   } else {
@@ -74,6 +74,15 @@ function pauseTimer() {
   toggleBtn();
 }
 
+//Reset State
+function resetTimer() {
+  stop(); // Stop the timer
+  time = startingMinutes * 60; // Reset time to the initial session time (25 minutes)
+  mainSectionText.innerText = "Session"; // Set the text back to "Session"
+  countDown.innerText = `${startingMinutes}:00`; // Display the initial time
+  updatedCountDown()
+  toggleBtn();
+}
 //Toggle buttons classes
 function toggleBtn() {
   startBtn.classList.toggle("d-none");
@@ -90,5 +99,4 @@ startBtn.addEventListener("click", () => {
   }
 });
 pauseBtn.addEventListener("click", pauseTimer);
-// resetBtn.addEventListener("click", resetTimer);
-
+resetBtn.addEventListener("click", resetTimer);
