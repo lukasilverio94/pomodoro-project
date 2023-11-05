@@ -10,14 +10,14 @@ const decreaseBreak = document.getElementById("decrease-break-btn");
 const increaseSectionBtn = document.getElementById("increase-section");
 const decreaseSectionBtn = document.getElementById("decrease-section");
 const sectionTimeDisplay = document.getElementById("section-time");
-
+const counter = document.getElementById("counter");
 //initial variables
 let startingMinutes = 25;
 let startBreak = 5;
 let time = startingMinutes * 60;
 let timer; //  store the interval timer
 let inBreak = false;
-
+let cycles = 0;
 //update countdown display
 function updateCountDownDisplay() {
   const minutes = Math.floor(time / 60);
@@ -35,9 +35,8 @@ function updateCountDownDisplay() {
 //Start Countdown Event
 function startTimer() {
   timer = setInterval(() => {
-    time--;
     updateCountDownDisplay();
-  }, 100);
+  }, 1000);
   toggleBtn();
 }
 //Start Break
@@ -53,7 +52,6 @@ function startBreakFun() {
   }
   //Check if a cycle is completed
   if (!inBreak && time === startingMinutes * 60) {
-    const counter = document.getElementById("counter");
     counter.innerText = parseInt(counter.innerText) + 1;
   }
   updateCountDownDisplay(); // Update the countdown display immediately
@@ -81,25 +79,30 @@ function resetTimer() {
   breakTime.innerText = startBreak;
   sectionTimeDisplay.innerText = startingMinutes;
   inBreak = false;
-  updateCountDownDisplay();
+  counter.innerText = cycles;
   toggleBtn();
+  updateCountDownDisplay();
 }
 //Update - Increase/Decrease Section Time
 function updateSectionTime(minutes) {
   startingMinutes = minutes;
   time = startingMinutes * 60;
+  if (startingMinutes < 5) startingMinutes = 5;
   countDown.innerText = `${startingMinutes}:00`;
   sectionTimeDisplay.innerText = startingMinutes;
 }
 //Update Break/Time
 function updateBreak(minutes) {
-  startBreak = minutes;
-  time = startBreak * 60;
-  if (startBreak < 1) startBreak = 1;
-  breakTime.innerText = startBreak;
-  if (!inBreak) {   //if you arent in break, update the time
-    time = startingMinutes * 60;
-    countDown.innerText = `${startingMinutes}:00`;
+  if (!inBreak) {   
+    startBreak = minutes; // If you're not in a break, just update the break time
+    if (startBreak < 1) startBreak = 1;
+    breakTime.innerText = startBreak;
+  } else {
+    // If you're in a break, update the break time and reset the countdown
+    startBreak = minutes;
+    if (startBreak < 1) startBreak = 1;
+    breakTime.innerText = startBreak;
+    time = startBreak * 60;
   }
 }
 //Toggle buttons classes
