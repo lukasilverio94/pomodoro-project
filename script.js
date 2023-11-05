@@ -18,19 +18,43 @@ let timeInSeconds = startingMinutes * 60;
 let timer; //  store the interval timer
 let inBreak = false;
 let cycles = 0;
+
+//FormatTime
+function formatTime(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60);
+  let seconds = totalSeconds % 60;
+  return (countDown.innerText = `${minutes}:${
+    seconds < 10 ? "0" : ""
+  }${seconds}`);
+}
+//Render Clock
+function renderClock(timeString) {
+  countDown.innerText = timeString;
+}
+//Control Clock
+function controlClock() {
+  if (inBreak) {
+    renderClock(formatTime(timeInSeconds));
+    mainSectionText.innerText = "Break Time - Relax";
+  } else {
+    renderClock(formatTime(timeInSeconds));
+    mainSectionText.innerText = "Session";
+  }
+}
 //update countdown display
 function updateCountDownDisplay() {
   timeInSeconds--;
-  const minutes = Math.floor(timeInSeconds / 60);
-  let seconds = timeInSeconds % 60;
-  countDown.innerText = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   if (timeInSeconds <= 0) {
     stop();
-    countDown.innerText = `${breakTime.innerText}:00`;
+    if (inBreak) {
+      timeInSeconds = startBreak * 60;
+    } else {
+      timeInSeconds = startingMinutes * 60;
+    }
     toggleBtn();
     startBreakFun();
-    playSound();
   }
+  renderClock(formatTime(timeInSeconds));
 }
 //Start Countdown Event
 function startTimer() {
@@ -39,25 +63,23 @@ function startTimer() {
   timer = setInterval(() => {
     updateCountDownDisplay();
   }, 1000);
+  controlClock();
 }
 //Start Break
 function startBreakFun() {
   if (inBreak) {
-    mainSectionText.innerText = "Back to work";
     inBreak = false;
-    timeInSeconds = startingMinutes * 60; //reset the countdown to session pomodoro again
+    timeInSeconds = startingMinutes * 60;
   } else {
-    mainSectionText.innerText = "Break Time - Relax";
     inBreak = true;
-    timeInSeconds = startBreak * 60; // Reset the countdown timer to the break time
+    timeInSeconds = startBreak * 60;
   }
-  //Check if a cycle is completed
   if (!inBreak && timeInSeconds === startingMinutes * 60) {
     counter.innerText = parseInt(counter.innerText) + 1;
   }
-  updateCountDownDisplay(); // Update the countdown display immediately
+  controlClock();
   startTimer();
-  toggleBtn()
+  toggleBtn();
 }
 //Clear Interval
 function stop() {
@@ -76,6 +98,7 @@ function resetTimer() {
   startBreak = 5;
   sectionTimeDisplay.innerText = "5";
   timeInSeconds = startingMinutes * 60; // Reset time to the initial session time (25 minutes)
+  renderClock(formatTime(timeInSeconds));
   mainSectionText.innerText = "Session"; // Set the text back to "Session"
   countDown.innerText = `${startingMinutes}:00`; // Display the initial time
   breakTime.innerText = startBreak;
@@ -83,14 +106,13 @@ function resetTimer() {
   inBreak = false;
   counter.innerText = cycles;
   toggleBtn();
-  updateCountDownDisplay();
 }
 //Update - Increase/Decrease Section Time
 function updateSectionTime(minutes) {
   startingMinutes = minutes;
   timeInSeconds = startingMinutes * 60;
   if (startingMinutes < 5) startingMinutes = 5;
-  countDown.innerText = `${startingMinutes}:00`;
+  renderClock(formatTime(timeInSeconds));
   sectionTimeDisplay.innerText = startingMinutes;
 }
 //Update Break/Time
