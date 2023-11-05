@@ -68,7 +68,6 @@ function pauseTimer() {
   stop();
   toggleBtn();
 }
-
 //Reset State
 function resetTimer() {
   stop();
@@ -85,13 +84,30 @@ function resetTimer() {
   updateCountDownDisplay();
   toggleBtn();
 }
+//Update - Increase/Decrease Section Time
+function updateSectionTime(minutes) {
+  startingMinutes = minutes;
+  time = startingMinutes * 60;
+  countDown.innerText = `${startingMinutes}:00`;
+  sectionTimeDisplay.innerText = startingMinutes;
+}
+//Update Break/Time
+function updateBreak(minutes) {
+  startBreak = minutes;
+  time = startBreak * 60;
+  if (startBreak < 1) startBreak = 1;
+  breakTime.innerText = startBreak;
+  if (!inBreak) {   //if you arent in break, update the time
+    time = startingMinutes * 60;
+    countDown.innerText = `${startingMinutes}:00`;
+  }
+}
 //Toggle buttons classes
 function toggleBtn() {
   startBtn.classList.toggle("d-none");
   pauseBtn.classList.toggle("d-none");
   pauseBtn.classList.toggle("d-block");
 }
-
 //Handle Events
 startBtn.addEventListener("click", () => {
   if (timer && time === startingMinutes) {
@@ -101,45 +117,19 @@ startBtn.addEventListener("click", () => {
   }
 });
 
-//Increase Pomodoro Time
 increaseSectionBtn.addEventListener("click", () => {
-  startingMinutes += 1;
-  time = startingMinutes * 60;
-  countDown.innerText = `${startingMinutes}:00`;
-  sectionTimeDisplay.innerText = startingMinutes;
+  updateSectionTime(startingMinutes + 1);
 });
-
-//Decrease pomodoro time
 decreaseSectionBtn.addEventListener("click", () => {
-  startingMinutes -= 1;
-  time = startingMinutes * 60;
-  countDown.innerText = `${startingMinutes}:00`;
-  sectionTimeDisplay.innerText = startingMinutes;
+  updateSectionTime(startingMinutes - 1);
 });
-
 //Increase Break Time
 increaseBreak.addEventListener("click", () => {
-  startBreak += 1;
-  time = startBreak * 60;
-  breakTime.innerText = startBreak;
-  // If you are not in a break, update the time
-  if (!inBreak) {
-    time = startingMinutes * 60;
-    countDown.innerText = `${startingMinutes}:00`;
-  }
+  updateBreak(startBreak + 1);
 });
 //Decrease Break Time
 decreaseBreak.addEventListener("click", () => {
-  startBreak -= 1;
-  if (startBreak < 1) startBreak = 1;
-  time = startBreak * 60;
-  breakTime.innerText = startBreak;
-  // If you are not in a break, update the time
-  if (!inBreak) {
-    time = startingMinutes * 60;
-    countDown.innerText = `${startingMinutes}:00`;
-  }
+  updateBreak(startBreak - 1);
 });
-
 pauseBtn.addEventListener("click", pauseTimer);
 resetBtn.addEventListener("click", resetTimer);
