@@ -17,21 +17,29 @@
     <script src="script.js" defer></script>
     <title>Pomodoro</title>
   </head>
-  <body>
+  <body class="h-100 overflow-hidden">
     <div class="container">
       <!-- header -->
       <header>
-        <h1 class="text-center mt-3 display-3">Pomodoro</h1>
+        <h1 class="text-center mb-1 display-6">Pomodoro 🍅</h1>
+        <hr class="w-75 m-auto" />
+        <p class="text-body text-center fs-6 pt-2">
+          Set your Section Time and your Break Time!
+          <span class="text-warning fw-semibold">Stay focus!</span>
+        </p>
       </header>
       <!-- Pomodoro Container -->
-      <main>
+      <main class="container">
         <!-- Display Timer -->
         <section
-          class="m-auto p-4 bg-danger text-center rounded-5"
+          class="container m-auto p-4 bg-danger text-center rounded-4"
           id="display"
-          style="width: 100%; max-width: 450px"
+          style="width: 70%"
         >
-          <h3 id="main-session-text" class="bg-dark py-2 text-warning">
+          <h3
+            id="main-session-text"
+            class="text-bg-dark py-2 text-warning rounded-3"
+          >
             Session
           </h3>
           <p id="time-left" class="display-2 fw-bold">25:00</p>
@@ -52,37 +60,43 @@
         <!-- Break  And Time Section Controls container -->
         <!-- Break Container -->
         <section
-          class="container text-center d-flex justify-content-center gap-5 align-items-center mt-3"
+          class="container-sm text-center d-flex justify-content-center gap-4 align-items-center mt-3"
         >
-          <div class="bg-danger p-3 rounded-3 text-bg-secondary">
-            <h4>Break</h4>
+          <div
+            class="bg-danger p-3 rounded-4 text-bg-secondary flex-grow"
+            style="width: 35%"
+          >
+            <h4 class="bg-dark text-warning fw-bold rounded-3 py-1">Break</h4>
             <button
               id="increase-break-btn"
-              class="bg-transparent border-0 text-primary display-6"
+              class="bg-transparent border-0 text-dark display-6"
             >
               &plus;
             </button>
             <span id="break-time" class="h1">5</span>
             <button
               id="decrease-break-btn"
-              class="bg-transparent border-0 text-primary display-6"
+              class="bg-transparent border-0 text-dark display-6"
             >
               &minus;
             </button>
           </div>
           <!-- Set Time Section -->
-          <div class="bg-danger p-3 rounded-3 text-bg-secondary">
-            <h4>Section</h4>
+          <div
+            class="bg-danger p-3 rounded-4 text-bg-secondary"
+            style="width: 35%"
+          >
+            <h4 class="bg-dark text-warning fw-bold rounded-3 py-1">Section</h4>
             <button
               id="increase-section"
-              class="bg-transparent border-0 text-primary display-6"
+              class="bg-transparent border-0 text-dark display-6"
             >
               &plus;
             </button>
             <span id="section-time" class="h1">25</span>
             <button
               id="decrease-section"
-              class="bg-transparent border-0 text-primary display-6"
+              class="bg-transparent border-0 text-dark display-6"
             >
               &minus;
             </button>
@@ -90,11 +104,13 @@
         </section>
         <!-- counter -->
         <div
-          class="container mt-3 bg-danger text-center  p-1 rounded-3 text-bg-secondary"
-          style="width: 200px !important"
-        > 
-          <p class="fw-bold fs-4">Cycles</p>
-          <span id="counter" class="fs-1 bg-dark p-1 text-warning rounded-3">0</span>
+          class="container mt-2 bg-danger text-center p-1 rounded-3 text-bg-secondary"
+          style="width: 50% !important"
+        >
+          <p class="fw-bold fs-4 text-bg-primary rounded-3">Cycles</p>
+          <span id="counter" class="fs-1 bg-dark px-5 text-warning rounded-3"
+            >0</span
+          >
         </div>
       </main>
     </div>
