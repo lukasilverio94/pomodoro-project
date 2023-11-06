@@ -2,7 +2,7 @@
 const mainSectionText = document.getElementById("main-session-text");
 const countDown = document.getElementById("time-left");
 const startBtn = document.getElementById("start-btn");
-const pauseBtn = document.getElementById("pause-btn");
+
 const resetBtn = document.getElementById("reset-btn");
 const increaseBreak = document.getElementById("increase-break-btn");
 const breakTime = document.getElementById("break-time");
@@ -85,12 +85,7 @@ function startBreakFun() {
 function stop() {
   clearInterval(timer);
 }
-//Pause Timer
-function pauseTimer() {
-  stop();
-  toggleBtn();
-}
-//Reset State
+//reset timer
 function resetTimer() {
   stop();
   clearInterval(timer);
@@ -132,8 +127,6 @@ function updateBreak(minutes) {
 //Toggle buttons classes
 function toggleBtn() {
   startBtn.classList.toggle("d-none");
-  pauseBtn.classList.toggle("d-none");
-  pauseBtn.classList.toggle("d-block");
 }
 //Handle Events
 startBtn.addEventListener("click", () => {
@@ -157,5 +150,4 @@ increaseBreak.addEventListener("click", () => {
 decreaseBreak.addEventListener("click", () => {
   updateBreak(startBreak - 1);
 });
-pauseBtn.addEventListener("click", pauseTimer);
 resetBtn.addEventListener("click", resetTimer);
